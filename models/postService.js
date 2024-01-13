@@ -143,4 +143,14 @@ ${magenta("}")}`;
       console.log(e.message);
     }
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      content: this.content,
+      author_id: this.author_id,
+      status: this.status,
+    };
+  }
 }

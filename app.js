@@ -1,88 +1,57 @@
 import "dotenv/config";
+import chalk from "chalk";
 
-import PostModel from "./models/postModel.js";
-import PostService from "./models/postService.js";
+import Action from "./action.js";
 
 console.clear();
 
-// const post2 = new PostService({
-//   title: "Course Html and Css1",
-//   content: "Course Html and Css Content",
-//   author_id: 1,
-//   status: "deactive",
-// });
+const error = chalk.redBright.bold;
+const warn = chalk.yellowBright.bold;
 
-// console.log(post2);
-// post2.save();
+const command = process.argv[2];
+const subCommand = process.argv[3];
 
-// const post3 = PostService.getPostById(1);
+const commands = ["list", "add", "show", "edit", "delete", "delete-all"];
+const subCommands = ["posts", "comments", "users"];
 
-// post3.title = "React jssssss";
-// post3.save();
-// console.log(post3);
+if (command) {
+  if (subCommand) {
+    switch (command) {
+      case "list":
+        Action.list(subCommand);
+        break;
+      case "add":
+        Action.add(subCommand);
+        break;
+      case "show":
+        Action.show(subCommand);
+        break;
+      case "edit":
+        Action.edit(subCommand);
+        break;
+      case "delete":
+        Action.delete(subCommand);
+        break;
+      case "delete-all":
+        Action.deleteAll(subCommand);
+        break;
 
-// const p4 = PostService.getPostByTitle("Course React js and Next js");
-// const p4 = PostService.getPostById(2);
-// console.log(p4);
-// p4.title = "Course React js and Next js";
-// p4.save();
-// console.log(p4);
+      default:
+        showAlert();
+        break;
+    }
+  } else {
+    showAlert();
+  }
+} else {
+  showAlert();
+}
 
-// let posts = PostService.getAllPosts();
+function showAlert() {
+  const alert = `${error("You must enter a command.")}
+Available command are:
+${warn(commands.join("\n"))}
+${chalk.redBright("example : node app list posts")}`;
 
-// console.log(posts);
-// console.log("--------------------------------");
-
-// try {
-//   console.log(PostService.deletePost(3));
-// } catch (e) {
-//   console.log(e.message);
-// }
-
-// posts = PostService.getAllPosts();
-
-// console.log(posts);
-
-const p1 = PostService.getPostByTitle("Course React js and Next js");
-
-// console.log(p1);
-
-const pData = {
-  title: "Course Node js",
-  content: "Course Node js Content",
-  authorId: 1,
-  status: "deactive",
-};
-
-// const p3 = new PostService(pData);
-
-// console.log(p3);
-// p3.save();
-
-const p6 = PostService.getPostById(3);
-
-// p6.content = "Course Node js Content1";
-// p6.author_id = 3;
-// p6.status = "active";
-
-// p6.save();
-
-console.log(PostService.deletePost(3));
-
-///----
-/*
-
- {
-            "id":1,
-            "title":"Course Html and Css",
-            "content":"Course Html and Css Content",
-            "author_id":1
-        },
-        {
-            "id":2,
-            "title":"Course React js and Next js",
-            "content":"Course React js and Next js Content",
-            "author_id":1
-        }
-
-*/
+  console.log(alert);
+}

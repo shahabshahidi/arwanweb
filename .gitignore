@@ -31,4 +31,4 @@ backend/.env
 backend/.env
 .env
 db.json
-backend/models/db.json
+database/db.json
